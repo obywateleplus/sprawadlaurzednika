@@ -1,6 +1,6 @@
 import express, {Express, Request, Response} from 'express';
 import { userRouter } from './routers/userRouter';
-import {apiVersion} from './vars';
+import {apiVersion, setupVars} from './vars';
 import dotenv from 'dotenv';
 import bodyParser from 'body-parser';
 
@@ -8,6 +8,8 @@ dotenv.config();
 
 const app: Express = express();
 const port = process.env.PORT;
+
+setupVars(process.env.DBPASSWORD);
 
 app.use(bodyParser.json());
 app.use(`/api/v${apiVersion}`, userRouter);
