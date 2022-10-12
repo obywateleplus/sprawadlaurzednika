@@ -6,9 +6,17 @@ export const userRouter: Router = express.Router();
 
 // result[0][0] JSON
 
-userRouter.route('/user')
+userRouter.post('/user', async(req: Request, res: Response) => {
+    const data = req.body;
+    const pool = database?.promise();
+    const userdata: any = await pool?.execute("SELECT * FROM `obywateleplus`.`uzytkownikserwis`  JOIN `obywateleplus`.`uzytkownik` ON `obywateleplus`.`uzytkownikserwis`.`uzytkownik_id`=`obywateleplus`.`uzytkownik`.`id` JOIN `obywateleplus`.`adres` ON `obywateleplus`.`uzytkownik`.`adres_id`=`obywateleplus`.`adres`.`id` WHERE `obywateleplus`.`uzytkownik`.`imie` = ? AND `obywateleplus`.`uzytkownik`.`nazwisko` = ?;", [data.firstname, data.lastname]);
+    if (userdata[0][0] === undefined) res.send({"code": 400, "message": `Cannot find user with name ${data.firstname} and surname ${data.lastname}`});
+    res.send(userdata[0][0]);
+});
+
+userRouter.route('/user/:id')
 .get(async(req: Request, res: Response) => {
     const pool = database?.promise();
     const result: any = await pool?.execute('SELECT * FROM `obywateleplus`.`kodpocztowy`;');
-    res.send(result[0][0].name);
+    res.send(`User id: ${req.params.id}`);
 });
