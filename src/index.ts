@@ -3,6 +3,8 @@ import dotenv from 'dotenv';
 import bodyParser from 'body-parser';
 import { authorizeAPI } from './authenticator';
 import { userRouter } from './routers/userRouter';
+import { ticketRouter } from './routers/ticketRouter';
+import { chatRouter } from './routers/chatRouter';
 import {apiVersion, setupVars} from './vars';
 
 dotenv.config();
@@ -15,6 +17,8 @@ setupVars(process.env.DBPASSWORD);
 app.use(bodyParser.json());
 app.use(authorizeAPI);
 app.use(`/api/v${apiVersion}`, userRouter);
+app.use(`/api/v${apiVersion}`, ticketRouter);
+app.use(`/api/v${apiVersion}`, chatRouter);
 
 app.get('*', (req: Request, res: Response) => {
     const url = req.protocol + '://' + req.get('host') + req.originalUrl;
