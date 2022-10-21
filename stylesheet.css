@@ -1,0 +1,45 @@
+.btn1{
+    display: block;
+    transition: 0.2s;
+    float:right;
+    box-shadow: 0px 0px 5px 2px rgb(11, 3, 45);
+}
+.btn1::after{
+    float: right;
+    transform: scale(1.5);
+}
+.zaw{
+    overflow: hidden;
+    max-height: 0;
+    transition: 0.2s;
+    position: absolute;
+    right:0%;
+    top:3%;
+}
+.ticket{
+    border-radius: 35px;
+    background-color: #706677;
+    height: 120px;
+    width: 220px;
+    border-radius: 20;
+    border-color: black;
+    border-style: solid;
+    padding: 10px;
+    margin:10px;
+    float:left;
+}
+.btn{
+    float:right;
+    box-shadow: 0px 0px 5px 2px rgb(11, 3, 45);
+}
+.btn4{
+        box-shadow: 0px 0px 5px 2px rgb(11, 3, 45);
+        float:right;
+}
+.btnkat{
+position: absolute;right:77%;top:33%;
+    box-shadow: 0px 0px 5px 2px rgb(11, 3, 45);
+    width: 100px ;
+    height: 20px;
+    background-color:white;
+}
