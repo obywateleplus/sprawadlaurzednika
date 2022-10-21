@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="PL-pl">
+  <head>
+    <meta charset="UTF-8">
+    <title>Logowanie</title>
+    <link rel="stylesheet" href="logowaniestyl.css">
+</head>
+<body style="height: 100%; margin: 0; font-family: Arial, Helvetica, sans-serif; background-color: #f03a47;"> 
+  <img src="https://cdn.discordapp.com/attachments/1028055005351125034/1029110950936203305/logo2.png" width="30%">
+  <hr size="10" color="(11, 3, 45)">
+
+  <main id="main-holder" style="width: 100%; height: 70%; display: grid; justify-items: center; align-items: center; background-color: rgb(234, 242, 239); border-radius: 7px; box-shadow: 0px 0px 5px 2px rgb(11, 3, 45); ">
+    <h1 id="login-header">Zaloguj się</h1>
+    
+    <form id="login-form">
+      <input type="text" name="username" id="username-field" class="login-form-field" placeholder="Nazwa użytkownika">
+      <input type="password" name="password" id="password-field" class="login-form-field" placeholder="Hasło">
+      <input type="submit" value="Zaloguj" id="login-form-submit">
+    </form>
+  
+  </main>
+  <script>
+  const loginForm = document.getElementById("login-form");
+const loginButton = document.getElementById("login-form-submit");
+const loginErrorMsg = document.getElementById("login-error-msg");
+
+loginButton.addEventListener("click", (e) => {
+    e.preventDefault();
+    const username = loginForm.username.value;
+    const password = loginForm.password.value;
+
+    if (username === "user" && password === "admin") {
+        alert("Logowanie przebiegło pomyślnie");
+        location.reload()
+        localStorage.setItem("loged", "Jan Kowalski");
+        window.location.href = 'http://127.0.0.1:5500/Sprawa%20dla%20U%C5%BC%C4%99dnika.html';
+    } else if (username === "urzednik" && password === "admin") { 
+        alert("Logowanie przebiegło pomyślnie");
+        location.reload();
+        localStorage.setItem("loged", "Kamil Zdun");
+        window.location.href = 'http://127.0.0.1:5500/Sprawa%20dla%20U%C5%BC%C4%99dnika.html';
+    } else {
+        alert("Nieprawidłowa nazwa lub hasło");
+        location.reload();
+    }
+})
+ </script>
+</body>
