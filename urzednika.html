@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="PL-pl">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .ticket{
+    border-radius: 35px;
+    background-color: #706677;
+    height: 120px;
+    width: 220px;
+    border-radius: 20;
+    border-color: black;
+    border-style: solid;
+    padding: 10px;
+    margin:10px;
+float:left;
+        }
+    </style>
+</head>
+    <body bgcolor="fo3a47" >
+        <img src="https://cdn.discordapp.com/attachments/1028055005351125034/1029110950936203305/logo2.png" width="30%">
+        <hr size="10" color="(11, 3, 45)">
+        <span style=" color:white;font-size:40px">    Witaj Urzędniku</span><br>
+        <div class="ticket" >
+            Wiza do Japonii<br>
+            Obywatel:Jan Kowalski<br><br>
+            <button id="6" class="btn6" style="box-shadow: 0px 0px 5px 2px rgb(11, 3, 45);background-color:#EAF2ef;"> Rozmowa z obywatelem </button>
+            </div>
+            <script type="text/javascript">
+                document.querySelectorAll('.btn6').forEach(button => {
+                button.addEventListener('click', () => {
+                  window.location.href = "http://127.0.0.1:5500/index%20(1).html?";
+                });
+                });
+            </script>
+</body>
+</html>
