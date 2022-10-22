@@ -3,7 +3,6 @@
   <head>
     <meta charset="UTF-8">
     <title>Logowanie</title>
-    <link rel="stylesheet" href="logowaniestyl.css">
 </head>
 <body style="height: 100%; margin: 0; font-family: Arial, Helvetica, sans-serif; background-color: #f03a47;"> 
   <img src="https://cdn.discordapp.com/attachments/1028055005351125034/1029110950936203305/logo2.png" width="30%">
@@ -33,12 +32,12 @@ loginButton.addEventListener("click", (e) => {
         alert("Logowanie przebiegło pomyślnie");
         location.reload()
         localStorage.setItem("loged", "Jan Kowalski");
-        window.location.href = 'http://127.0.0.1:5500/Sprawa%20dla%20U%C5%BC%C4%99dnika.html';
+        window.location.href = 'http://localhost:3000/index.html';
     } else if (username === "urzednik" && password === "admin") { 
         alert("Logowanie przebiegło pomyślnie");
         location.reload();
         localStorage.setItem("loged", "Kamil Zdun");
-        window.location.href = 'http://127.0.0.1:5500/Sprawa%20dla%20U%C5%BC%C4%99dnika.html';
+        window.location.href = 'http://localhost:3000/index.html';
     } else {
         alert("Nieprawidłowa nazwa lub hasło");
         location.reload();
