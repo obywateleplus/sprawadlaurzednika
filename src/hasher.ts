@@ -1,16 +1,16 @@
 import crypto, {Hash} from 'crypto';
 
-export async function genHash(_object: string) {
+export async function genHash(src: string | null) {
     var hash: Hash = crypto.createHash('sha256');
-    hash.update(_object);
+    if (src != null) {
+        hash.update(src);
+    }
     const result: string = hash.digest('hex');
     return result;
 };
 
-export async function compareHash(src: string, hash: string) {
-    var hasher: Hash = crypto.createHash('sha256');
-    hasher.update(src);
-    const srcComparable: string = hasher.digest('hex');
+export async function compareHash(src: string | null, hash: string) {
+    const srcComparable: string = await genHash(src);
     if (srcComparable === hash){
         return true;
     } else {

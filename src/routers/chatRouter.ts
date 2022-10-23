@@ -19,6 +19,6 @@ chatRouter.route('/chat')
 .post(async(req: Request, res: Response) => {
     const data = req.body;
     const pool = database?.promise();
-    const result: any = await pool?.execute("INSERT INTO `obywateleplus`.`chatsave` VALUES (?, ?, ?, ?);", [data.sender, data.content, data.sent, data.ticket]);
+    const result: any = await pool?.execute("INSERT INTO `obywateleplus`.`chatsave` VALUES (?, ?, ?);", [data.content, data.sent, data.ticket]);
     res.send(result);
 });
