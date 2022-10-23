@@ -82,7 +82,7 @@
       function fromBin(bin) {
         return bin.replace(/\s*[01]{8}\s*/g, function (binary) {
           var _bin = binary;
-          if (binary == '10000010' || binary == '10000010' || binary == '10000011' || binary == '10000011' || binary == '10001100' || binary == '10001100' ||
+          if (binary == '10000010' || binary == '10000011' || binary == '10001100' ||
           binary == '10100000' || binary == '10100001' || binary == '10100001' || binary == '10100010' || binary == '1101001' || binary == '1111001' ||
           binary == '10101101' || binary == '10101101' || binary == '10111101' || binary == '10111110' || binary == '10111100' || binary == '10111101') {
             _bin = bin.substring(bin.indexOf(binary), bin.indexOf(binary) + 9);
@@ -160,7 +160,7 @@
       document.querySelectorAll('.btnwroc').forEach(button => {
         button.addEventListener('click', () => {
           smth = false;
-          window.location.href = "http://localhost:3000/index.html";
+          window.location.href = "http://97.206.112.180:43638/index.html";
         });
       });
     </script>

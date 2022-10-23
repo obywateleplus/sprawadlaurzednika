@@ -9,7 +9,7 @@ async function addTicket(title, helper, ticketid, tickets) {
 }
 
 async function addTickets(userid, type, ticketlist) {
-    axios.get(`http://localhost:2056/api/v1/ticket?user=${userid}&type=${type}`)
+    axios.get(`http://97.206.112.180:43638/api/v1/ticket?user=${userid}&type=${type}`)
     .then(function (response) {
         const json = JSON.parse(JSON.stringify(response.data));
         var i = 0;
