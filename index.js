@@ -35,7 +35,7 @@ io.on('connection', (socket) => {
   socket.on('chat message', msg => {
     io.emit('chat message', msg);
   });
-  axios.get('http://97.206.112.180:43638/api/v1/chat?ticket=1')
+  axios.get('http://87.206.112.180:43638/api/v1/chat?ticket=1')
     .then(function (response) {
       const data = JSON.stringify(response.data);
       const bin = toBin(data);
@@ -45,5 +45,5 @@ io.on('connection', (socket) => {
 });
 
 http.listen(port, () => {
-  console.log(`Socket.IO server running at http://97.206.112.180:${port}/`);
+  console.log(`Socket.IO server running at http://87.206.112.180:${port}/`);
 });

@@ -11,7 +11,7 @@ function generateTimestamp() {
 
 function sendChatMessage(msg, ticket) {
     const date = generateTimestamp();
-    axios.post('http://97.206.112.180:43638/api/v1/chat',
+    axios.post('http://87.206.112.180:43638/api/v1/chat',
     {
         content: msg,
         sent: date,

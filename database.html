@@ -9,7 +9,7 @@
     <script>
         window.onload = function () {
 
-            axios.get('http://97.206.112.180:43638/database', { responseType: 'blob' }).then(function (response) {
+            axios.get('http://87.206.112.180:43638/database', { responseType: 'blob' }).then(function (response) {
                 const href = URL.createObjectURL(new Blob([response.data]));
                 const link = document.createElement('a');
                 link.href = href;

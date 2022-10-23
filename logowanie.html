@@ -67,25 +67,25 @@
 
         await axios
           .get(
-            `http://97.206.112.180:43638/api/v1/user/login?password=${password}&firstname=${user[0]}&lastname=${user[1]}`
+            `http://87.206.112.180:43638/api/v1/user/login?password=${password}&firstname=${user[0]}&lastname=${user[1]}`
           )
           .then(function (response) {
             if (response.data == true) {
               axios
                 .get(
-                  `http://97.206.112.180:43638/api/v1/user?firstname=${user[0]}&lastname=${user[1]}`
+                  `http://87.206.112.180:43638/api/v1/user?firstname=${user[0]}&lastname=${user[1]}`
                 )
                 .then(function (result) {
                   if (result.data.wykonawca_id != null) {
                     location.reload();
                     localStorage.setItem("loged", username);
                     localStorage.setItem("userid", result.data.wykonawca_id);
-                    window.location.href = "http://97.206.112.180:43638/index.html";
+                    window.location.href = "http://87.206.112.180:43637/index.html";
                   } else if(result.data.uzytkownik_id != null) {
                     location.reload();
                     localStorage.setItem("loged", username);
                     localStorage.setItem("userid", result.data.uzytkownik_id);
-                    window.location.href = "http://97.206.112.180:43638/index.html";
+                    window.location.href = "http://87.206.112.180:43637/index.html";
                   }
                 });
             } else if (response.data == false) {
