@@ -14,7 +14,7 @@
     window.onload = function () {
       const logged = localStorage.getItem('loged');
       if (logged == null) {
-        window.location.href = '/logowanie.html';
+        location.assign('http://87.206.112.180:43637/logowanie.html');
       } else {
         var buttons = document.getElementById("btn1");
         var logout = document.getElementById('logout');
@@ -47,7 +47,7 @@
 
         document.querySelectorAll("#chatbtn").forEach((button) => {
           button.addEventListener("click", () => {
-            window.location.href = `http://87.206.112.180:43637/chat.html?ticket=${button.getAttribute("data-ticketid")}`;
+            location.assign(`http://87.206.112.180:43637/chat.html?ticket=${button.getAttribute("data-ticketid")}`);
           });
         });
       }

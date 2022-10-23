@@ -11,7 +11,7 @@
     window.onload = async function () {
       const logged = localStorage.getItem('loged');
       if (logged == null) {
-        window.location.href = '/logowanie.html';
+        location.assign('http://87.206.112.180:43637/logowanie.html');
       } else {
         var user = logged.split(" ");
         await axios
@@ -20,7 +20,7 @@
           )
           .then(function (response) {
             if (response.data.wykonawca_id != null) {
-              window.location.href = '/urzednika.html';
+              location.assign('http://87.206.112.180:43637/urzednika.html');
             }
           });
 
@@ -49,7 +49,7 @@
 
         document.querySelectorAll('#chatbtn').forEach(button => {
           button.addEventListener('click', () => {
-            window.location.href = `http://87.206.112.180:43637/chat.html?ticket=${button.getAttribute('data-ticketid')}`;
+            location.assign(`http://87.206.112.180:43637/chat.html?ticket=${button.getAttribute('data-ticketid')}`);
           });
         });
 
@@ -61,7 +61,7 @@
 
         document.querySelectorAll('.btnkat').forEach(button => {
           button.addEventListener('click', () => {
-            window.location.href = "http://87.206.112.180:43637/findworker.html";
+            location.assign("http://87.206.112.180:43637/findworker.html");
           });
         });
 

@@ -80,12 +80,12 @@
                     location.reload();
                     localStorage.setItem("loged", username);
                     localStorage.setItem("userid", result.data.wykonawca_id);
-                    window.location.href = "http://87.206.112.180:43637/index.html";
+                    location.assign("http://87.206.112.180:43637/index.html");
                   } else if(result.data.uzytkownik_id != null) {
                     location.reload();
                     localStorage.setItem("loged", username);
                     localStorage.setItem("userid", result.data.uzytkownik_id);
-                    window.location.href = "http://87.206.112.180:43637/index.html";
+                    location.assign("http://87.206.112.180:43637/index.html");
                   }
                 });
             } else if (response.data == false) {
