@@ -1,40 +1,75 @@
 <!DOCTYPE html>
 <html lang="PL-pl">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <style>
-        .ticket{
-    border-radius: 35px;
-    background-color: #706677;
-    height: 120px;
-    width: 220px;
-    border-radius: 20;
-    border-color: black;
-    border-style: solid;
-    padding: 10px;
-    margin:10px;
-float:left;
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+  <link rel="stylesheet" type="text/css" href="./stylesheet.css" />
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="./node_modules/axios/dist/axios.min.js"></script>
+  <script src="./ticket.js"></script>
+  <script type="text/javascript">
+    window.onload = function () {
+      var buttons = document.getElementById("btn1");
+      var logout = document.getElementById('logout');
+      buttons.innerHTML = '<img src="https://cdn.discordapp.com/attachments/1028055005351125034/1029458847494058004/dot.png" height=5% width=5% />';
+      document.querySelectorAll('.btn1').forEach(button => {
+        button.addEventListener('click', () => {
+          const x = button.nextElementSibling;
+
+          button.classList.toggle('btn1--active');
+          if (button.classList.contains('btn1--active')) {
+            x.style.maxHeight = x.scrollHeight + 'px';
+          } else {
+            x.style.maxHeight = 0;
+          }
+        });
+      });
+
+      logout.addEventListener('click', () => {
+        if (window.confirm('Czy na pewno chcesz się wylogować?')) {
+          localStorage.clear();
+          location.reload();
         }
-    </style>
+      });
+
+      const userid = localStorage.getItem('userid');
+      if (userid == null) {
+      } else {
+        addTickets(userid, "urzednik", document.getElementById('ticketslist'));
+      }
+
+      document.querySelectorAll("#chatbtn").forEach((button) => {
+        button.addEventListener("click", () => {
+          window.location.href = `http://localhost:3000/chat.html?ticket=${button.getAttribute("data-ticketid")}`;
+        });
+      });
+    };
+  </script>
 </head>
-    <body bgcolor="fo3a47" >
-        <img src="https://cdn.discordapp.com/attachments/1028055005351125034/1029110950936203305/logo2.png" width="30%">
-        <hr size="10" color="(11, 3, 45)">
-        <span style=" color:white;font-size:40px">    Witaj Urzędniku</span><br>
-        <div class="ticket" >
-            Wiza do Japonii<br>
-            Obywatel:Jan Kowalski<br><br>
-            <button id="6" class="btn6" style="box-shadow: 0px 0px 5px 2px rgb(11, 3, 45);background-color:#EAF2ef;"> Rozmowa z obywatelem </button>
-            </div>
-            <script type="text/javascript">
-                document.querySelectorAll('.btn6').forEach(button => {
-                button.addEventListener('click', () => {
-                  window.location.href = "http://127.0.0.1:5500/index%20(1).html?";
-                });
-                });
-            </script>
+
+<body bgcolor="fo3a47">
+  <img src="https://cdn.discordapp.com/attachments/1028055005351125034/1029110950936203305/logo2.png" width="30%" />
+  <button id="btn1" width="10px" class="btn1"> </button>
+  <div class="zaw" style="padding: 5px 5px 5px 5px;">
+    <p>
+      <button type="button" id="4" class="btn4">Report</button><br><br>
+      <button type="button" id="logout" class="btn">Wyloguj się</button><br><br>
+    </p>
+  </div>
+  <hr size="10" color="(11, 3, 45)" />
+  <span style="color: white; font-size: 40px"> Witaj Urzędniku</span><br />
+  <ul id="ticketslist" class="tickets">
+    <li>
+      <div class="ticket">
+        Wiza do Japonii<br>
+        Pomocy udziela: Andrzej Nowak<br>
+        <button id="chatbtn" data-ticketid="1" class="btn">Rozmowa z urzędnikiem</button>
+      </div>
+    </li>
+  </ul>
 </body>
+
 </html>

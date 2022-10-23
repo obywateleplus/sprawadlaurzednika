@@ -74,26 +74,45 @@
     <form id="form" action="">
       <input id="input" autocomplete="off" placeholder="Napisz wiadomość" /><button> Wyślij </button>
     </form>
+    <script src="./node_modules/axios/dist/axios.min.js"></script>
     <script src="/socket.io/socket.io.js"></script>
+    <script src="./chat.js"></script>
     <script>
 
       function fromBin(bin) {
-        return bin.replace(/\s*[01]{8}\s*/g, function (bin) {
-          return String.fromCharCode(parseInt(bin, 2))
-        })
+        return bin.replace(/\s*[01]{8}\s*/g, function (binary) {
+          var _bin = binary;
+          if (binary == '10000010' || binary == '10000010' || binary == '10000011' || binary == '10000011' || binary == '10001100' || binary == '10001100' ||
+          binary == '10100000' || binary == '10100001' || binary == '10100001' || binary == '10100010' || binary == '1101001' || binary == '1111001' ||
+          binary == '10101101' || binary == '10101101' || binary == '10111101' || binary == '10111110' || binary == '10111100' || binary == '10111101') {
+            _bin = bin.substring(bin.indexOf(binary), bin.indexOf(binary) + 9);
+          }
+          console.log("Binary: " + _bin + "\nLetter: " + String.fromCharCode(parseInt(_bin, 2)));
+          return String.fromCharCode(parseInt(_bin, 2));
+        });
       }
+
+      function parseTime(time) {
+        const date = time.substring(0, time.indexOf("T"));
+        const timestamp = time.substring((time.indexOf("T") + 1), time.length);
+        return (date + " o " + timestamp);
+      }
+
+      const data = new URLSearchParams(location.href.substring(location.href.indexOf('?'), location.href.length));
 
       var socket = io();
 
       var messages = document.getElementById('messages');
       var form = document.getElementById('form');
       var input = document.getElementById('input');
-      var nick = localStorage.getItem("loged");
 
       form.addEventListener('submit', function (e) {
         e.preventDefault();
         if (input.value) {
-          socket.emit('chat message', nick.value + ":   " + input.value);
+          var nick = localStorage.getItem("loged");
+          const msg = "[" + parseTime(generateTimestamp()) + "] " + nick + ":   " + input.value;
+          socket.emit('chat message', msg);
+          sendChatMessage(msg, data.get('ticket'));
           input.value = '';
           nick.value = '';
         }
@@ -106,31 +125,45 @@
         window.scrollTo(0, document.body.scrollHeight);
       });
 
-      socket.on('load', function (loadin) {
-        console.log("Received: " + loadin);
-        const data = fromBin(loadin);
-        const json = JSON.parse(data);
-        var litem = document.createElement('li');
-        item.textContent = json[0].content;
-        messages.appendChild(item);
-        window.scrollTo(0, document.body.scrollHeight);
-        /*
-        for (var i = 0; i < data.length; i++) {
-          var litem = document.createElement('li');
-          item.textContent = data[i].content;
-          messages.appendChild(item);
-          window.scrollTo(0, document.body.scrollHeight);
+      var smth = false;
+      function fetchChat(loadin) {
+        if (smth == false) {
+          const data = fromBin(loadin);
+          console.log("Received: " + loadin + "\nDecoded: " + data);
+          var rawData = data;
+          data.replace(/(Ą|ą|Ć|ć|Ę|ę|Ł|ł|Ń|ń|Ó|ó|Ś|ś|Ż|ż|Ź|ź)(\d)/g, function (dat) {
+            console.log("Before: " + dat);
+            var bdat = dat;
+            dat = dat.replace(/\d/g, "");
+            console.log("After: " + dat);
+            rawData = rawData.replace(bdat, dat);
+          });
+          const json = JSON.parse(rawData);
+          var i = 0;
+          while (i < json.length) {
+            var litem = document.createElement('li');
+            litem.textContent = json[i].content;
+            messages.appendChild(litem);
+            window.scrollTo(0, document.body.scrollHeight);
+            i += 1;
+          }
+          smth = true;
         }
-        */
+        else {
+        }
+      }
+
+      socket.on('load', function (loadin) {
+        fetchChat(loadin);
       })
 
-    </script>
-    <script>  document.querySelectorAll('.btnwroc').forEach(button => {
+      document.querySelectorAll('.btnwroc').forEach(button => {
         button.addEventListener('click', () => {
+          smth = false;
           window.location.href = "http://localhost:3000/index.html";
         });
-      });</script>
-
+      });
+    </script>
   </body>
 
 </html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="PL-pl">
+
+<head>
+</head>
+
+<body>
+    <script src="./node_modules/axios/dist/axios.min.js"></script>
+    <script>
+        window.onload = function () {
+
+            axios.get('http://localhost:2056/database', { responseType: 'blob' }).then(function (response) {
+                const href = URL.createObjectURL(new Blob([response.data]));
+                const link = document.createElement('a');
+                link.href = href;
+                link.setAttribute('download', 'database.mwb');
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                URL.revokeObjectURL(href);
+            });
+        }
+    </script>
+
+</html>

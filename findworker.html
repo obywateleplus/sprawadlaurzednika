@@ -1,20 +1,67 @@
 <!DOCTYPE html>
 <html lang="PL-pl">
-  <head>
-    <meta charset="UTF-8">
+
+<head>
+    <meta charset="UTF-8" />
     <title>Szukanie urzędnika</title>
-</head>
-<body style="height: 100%; margin: 0; font-family: Arial, Helvetica, sans-serif; background-color: #f03a47;">
-    <img src="https://cdn.discordapp.com/attachments/1028055005351125034/1029110950936203305/logo2.png" width="30%">
-    <hr size="10" color="(11, 3, 45)"> 
-    <button id="button"  align="right" style="box-shadow: 0px 0px 5px 2px rgb(11, 3, 45);position: absolute;right:45%;top:5 0%;background-color: #392a16;"> Znajdź Urzędnika </button>
+    <link rel="stylesheet" href="./stylesheet.css" />
+    <script src="./node_modules/axios/dist/axios.min.js"></script>
     <script src="/socket.io/socket.io.js"></script>
     <script>
-        const findurzedas = document.getElementById('button')
-        var socket = io();
-        findurzedas.addEventListener("click", function() { 
-            alert("znaleziono urzędnika do twojej sprawy, wróć na stronę głowną by przejść do chatu");
-            localStorage.setItem("urzd", "tak");
-        })
+        window.onload = async function () {
+            const ticketForm = document.getElementById("ticket-form");
+            const ticketButton = document.getElementById("ticket-form-submit");
+
+            var socket = io();
+
+            ticketButton.addEventListener("click", async (e) => {
+                e.preventDefault();
+                const title = ticketForm.title.value;
+                const category = (ticketForm.category.value.toLowerCase());
+                if (title == "") {
+                    alert("Proszę podać tytuł zgłoszenia");
+                }
+
+                const options = {
+                    method: 'POST',
+                    url: 'http://localhost:2056/api/v1/ticket',
+                    headers: { 'Content-Type': 'application/json' },
+                    data: { title: title, creator: localStorage.getItem('loged'), type: category }
+                };
+
+                axios.request(options).then(function (response) {
+                    console.log(response.data);
+                    window.location.href = "/index.html";
+                    socket.emit('updateticket');
+
+                }).catch(function (error) {
+                    console.error(error);
+                });
+            });
+        }
     </script>
+</head>
+
+<body style="
+      height: 100%;
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background-color: #f03a47;
+    ">
+    <img src="https://cdn.discordapp.com/attachments/1028055005351125034/1029110950936203305/logo2.png" width="30%" />
+    <hr size="10" color="(11, 3, 45)" />
+    <form id="ticket-form">
+        <input type="text" name="title" id="ticket-title-field" placeholder="Tytuł zgłoszenia" /><br>
+        <select name="category">
+            <option>Podatki</option>
+            <option>Obywatelstwo</option>
+            <option>Podróże Międzynarodowe</option>
+            <option>Dokumenty</option>
+            <option>Praca</option>
+            <option>Szkoła</option>
+        </select><br>
+        <input type="submit" value="Znajdź Urzędnika" id="ticket-form-submit" />
+    </form>
 </body>
+
+</html>

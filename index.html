@@ -4,10 +4,70 @@
 <head>
   <link rel="stylesheet" type="text/css" href="./stylesheet.css">
   <meta charset="UTF-8">
+  <script src="./node_modules/axios/dist/axios.min.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="./ticket.js"></script>
   <script>
-    const logged = localStorage.getItem('loged');
-    if (logged == null) {
-      window.location.href = '/logowanie.html';
+    window.onload = async function () {
+      const logged = localStorage.getItem('loged');
+      if (logged == null) {
+        window.location.href = '/logowanie.html';
+      } else {
+        var user = logged.split(" ");
+        await axios
+          .get(
+            `http://localhost:2056/api/v1/user?firstname=${user[0]}&lastname=${user[1]}`
+          )
+          .then(function (response) {
+            if (response.data.wykonawca_id != null) {
+              window.location.href = '/urzednika.html';
+            }
+          });
+
+        var buttons = document.getElementById("btn1");
+        var logout = document.getElementById('logout');
+        buttons.innerHTML = '<img src="https://cdn.discordapp.com/attachments/1028055005351125034/1029458847494058004/dot.png" height=5% width=5% />';
+        document.querySelectorAll('.btn1').forEach(button => {
+          button.addEventListener('click', () => {
+            const x = button.nextElementSibling;
+
+            button.classList.toggle('btn1--active');
+            if (button.classList.contains('btn1--active')) {
+              x.style.maxHeight = x.scrollHeight + 'px';
+            } else {
+              x.style.maxHeight = 0;
+            }
+          });
+        });
+
+        logout.addEventListener('click', () => {
+          if (window.confirm('Czy na pewno chcesz się wylogować?')) {
+            localStorage.clear();
+            location.reload();
+          }
+        });
+
+        document.querySelectorAll('#chatbtn').forEach(button => {
+          button.addEventListener('click', () => {
+            window.location.href = `http://localhost:3000/chat.html?ticket=${button.getAttribute('data-ticketid')}`;
+          });
+        });
+
+        document.querySelectorAll('.btn4').forEach(button => {
+          button.addEventListener('click', () => {
+            alert("Twoje zgłoszenie zostanie rozpatrzone")
+          });
+        });
+
+        document.querySelectorAll('.btnkat').forEach(button => {
+          button.addEventListener('click', () => {
+            window.location.href = "http://localhost:3000/findworker.html";
+          });
+        });
+
+        const span = document.getElementById('welcome');
+        span.innerHTML = 'Witaj, ' + logged + ' w czym możemy pomóc?';
+      }
     }
   </script>
   <title>Sprawa dla Użędnika</title>
@@ -20,62 +80,28 @@
   <div class="zaw" style="padding: 5px 5px 5px 5px;">
     <p>
       <button type="button" id="4" class="btn4">Report</button><br><br>
+      <button type="button" id="logout" class="btn">Wyloguj się</button><br><br>
     </p>
   </div>
   <hr size="10" color="(11, 3, 45)">
   <p>
-    <span style=" color:white;font-size:40px"> Witaj, w czym możemy pomóc?</span><br>
-  <div class="ticket">
-    Wiza do Japonii<br>
-    Pomocy udziela: Karol Wojtyła<br>
-    <button id="6" class="btn6"
-      style="box-shadow: 0px 0px 5px 2px rgb(11, 3, 45);position: absolute;right:90%;top:33%;background-color:#EAF2ef;">
-      Rozmowa z urzędnikiem </button>
-  </div>
-  <div class="ticket">
-    Znjadź urzędnika do sprawy<br><br>
-    <button id="btnkat" class="btnkat"> Znajdź</button>
-  </div>
+    <span id="welcome" style=" color:white;font-size:40px"> Witaj, w czym możemy pomóc?</span><br>
   </p>
-  <script>
-    document.querySelectorAll('.btn1').forEach(button => {
-      button.addEventListener('click', () => {
-        const x = button.nextElementSibling;
-
-        button.classList.toggle('btn1--active');
-        if (button.classList.contains('btn1--active')) {
-          x.style.maxHeight = x.scrollHeight + 'px';
-        } else {
-          x.style.maxHeight = 0;
-        }
-      });
-    });
-  </script>
-  <script type="text/javascript">
-    var buttons = document.getElementById("btn1");
-    buttons.innerHTML = '<img src="https://cdn.discordapp.com/attachments/1028055005351125034/1029458847494058004/dot.png" height=5% width=5% />';
-  </script>
-  <script type="text/javascript">
-    document.querySelectorAll('.btn6').forEach(button => {
-      button.addEventListener('click', () => {
-        window.location.href = "http://localhost:3000/chat.html";
-      });
-    });
-  </script>
-  <script type="text/javascript">
-    document.querySelectorAll('.btn4').forEach(button => {
-      button.addEventListener('click', () => {
-        alert("Twoje zgłoszenie zostanie rozpatrzone")
-      });
-    });
-  </script>
-  <script>
-    document.querySelectorAll('.btnkat').forEach(button => {
-      button.addEventListener('click', () => {
-        window.location.href = "http://localhost:3000/kategorie.html";
-      });
-    });
-  </script>
+  <ul id="ticketslist" class="tickets">
+    <li>
+      <div class="ticket">
+        Wiza do Japonii<br>
+        Pomocy udziela: Andrzej Nowak<br>
+        <button id="chatbtn" data-ticketid="1" class="btn">Rozmowa z urzędnikiem</button>
+      </div>
+    </li>
+    <li>
+      <div class="ticket">
+        Znjadź urzędnika do sprawy<br><br>
+        <button id="btnkat" class="btnkat"> Znajdź</button>
+      </div>
+    </li>
+  </ul>
 </body>
 
 </html>
